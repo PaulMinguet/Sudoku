@@ -5,6 +5,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class Grille extends JComponent implements MouseListener{
 	private int x = 0;											//Définition des variables
@@ -12,6 +16,7 @@ public class Grille extends JComponent implements MouseListener{
 	private int i = 0;
 	private int j = 0;
 	private int k = 0;
+	private int l = 0;
 	private int sourisX;
 	private int sourisY;
 	private int clicX;
@@ -244,6 +249,34 @@ public class Grille extends JComponent implements MouseListener{
 			if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&
 				this.clicY > (this.getHeight()-this.tailleCase*3)/8+30 && this.clicY < (this.getHeight()-this.tailleCase*3)/8+this.tailleCase+30){
 				System.out.println("Save");
+				JFileChooser dialogue = new JFileChooser(new File("."));
+				File fichier;
+				if(dialogue.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
+					fichier = dialogue.getSelectedFile();
+					FileOutputStream fos = null;
+					try{
+						fos = new FileOutputStream(fichier);
+						byte[] buf = new byte[72];
+						for(k = 0; k <= 5; k++){
+							for(i = 0; i < 9; i++){
+								for(j = 0; j < 9; j++){
+									buf = this.tableau.getValeurString(k, i, j).getBytes();
+									fos.write(buf);
+									/*if((j+1)%3 == 0){
+										fos.write(" ".getBytes());
+									}*/
+									if((i*9+(j+1))%9 == 0){
+										fos.write("\n".getBytes());
+									}
+								}
+							}
+							fos.write("\n".getBytes());
+						}
+						fos.close();
+					}catch(IOException ioe){
+						ioe.printStackTrace();
+					}
+				}
 			}
 
 		/*--------------------------------------------Clics Import--------------------------------------------*/

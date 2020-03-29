@@ -13,16 +13,6 @@ public class Main{
 
 	public static void main(String[] args) throws IOException{
 
-		JFileChooser dialogue = new JFileChooser(new File("."));
-		PrintWriter sortie;
-		File fichier;
-		if(dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-			fichier = dialogue.getSelectedFile();
-			sortie = new PrintWriter(new FileWriter(fichier.getPath(),true));
-			sortie.println(args[0]);
-			sortie.close();
-		}else{
-
 		Tableau tableau = new Tableau();
 		Grille grille = new Grille(tableau);
 		JFrame fenetre = new JFrame("Sudoku");
@@ -37,6 +27,5 @@ public class Main{
 	    fenetre.setResizable(false);
 	    //System.out.println("valeur : " + tableau.getValeur(0,0,5));
 	    fenetre.setVisible(true);
-		}
 	}
 }
