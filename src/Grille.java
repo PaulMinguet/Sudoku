@@ -283,6 +283,35 @@ public class Grille extends JComponent implements MouseListener{
 			if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&
 				this.clicY > 3*((this.getHeight()-this.tailleCase*3)/8)+30 && this.clicY < 3*((this.getHeight()-this.tailleCase*3)/8)+this.tailleCase+30){
 				System.out.println("Import");
+				JFileChooser dialogue = new JFileChooser(new File("."));
+				File fichier;
+				if(dialogue.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
+					fichier = dialogue.getSelectedFile();
+					FileInputStream fis = null;
+					try{
+						fis = new FileInputStream(fichier);
+						int b;
+						for(k = 0; k <= 5; k++){
+							for(i = 0; i < 9; i++){
+								for(j = 0; j < 9; j++){
+									b = fis.read()-48;	
+									this.tableau.setValue(k,i,j,b);
+									/*if((j+1)%3 == 0){
+										fos.write(" ".getBytes());
+									}*/
+									if((i*9+(j+1))%9 == 0){
+										fis.read();
+									}
+								}
+							}
+							fis.read();
+						}
+						fis.close();
+					}catch(IOException ioe){
+						ioe.printStackTrace();
+					}
+					repaint();
+				}
 			}
 		}
 	}
