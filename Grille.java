@@ -136,6 +136,18 @@ public class Grille extends JComponent implements MouseListener{
     	secondPinceau.drawRoundRect(this.x, this.y, this.tailleCase*3, this.tailleCase, this.tailleCase, this.tailleCase);
     	secondPinceau.drawString("Importer", this.x+3*this.tailleCase/4, this.y+2*this.tailleCase/3);	
 
+    	/*---------------------------------------------Bouton Résoudre---------------------------------------------*/
+
+	    this.x = (this.getWidth()-this.tailleCase*4);						//Positionner le bouton Sauvegarde
+	    this.y = 5*((this.getHeight()-this.tailleCase*3)/8);
+
+	    secondPinceau.setColor(new Color(128, 208, 255));
+	    secondPinceau.setFont(new Font("default", Font.BOLD, tailleCase/4));
+		secondPinceau.fillRoundRect(this.x, this.y, this.tailleCase*3, this.tailleCase, this.tailleCase, this.tailleCase);
+		secondPinceau.setColor(Color.black);
+    	secondPinceau.drawRoundRect(this.x, this.y, this.tailleCase*3, this.tailleCase, this.tailleCase, this.tailleCase);
+    	secondPinceau.drawString("Résoudre", this.x+3*this.tailleCase/4, this.y+2*this.tailleCase/3);
+
     	/*---------------------------------------------Tableau valeurs gauche---------------------------------------------*/
 
 	    this.x = ((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2;						//Positionner le tableau de valeurs à gauche
@@ -249,6 +261,8 @@ public class Grille extends JComponent implements MouseListener{
 			if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&
 				this.clicY > (this.getHeight()-this.tailleCase*3)/8+30 && this.clicY < (this.getHeight()-this.tailleCase*3)/8+this.tailleCase+30){
 				System.out.println("Save");
+				String numerique = "";
+				String hexa = "";
 				JFileChooser dialogue = new JFileChooser(new File("."));
 				File fichier;
 				if(dialogue.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
@@ -312,6 +326,11 @@ public class Grille extends JComponent implements MouseListener{
 					}
 					repaint();
 				}
+			}
+
+		/*--------------------------------------------Clics Sauvegarde--------------------------------------------*/
+			if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&
+				this.clicY > 5*((this.getHeight()-this.tailleCase*3)/8)+30 && this.clicY < 5*((this.getHeight()-this.tailleCase*3)/8)+this.tailleCase+30){
 			}
 		}
 	}
