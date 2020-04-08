@@ -1,4 +1,3 @@
-
 public class Solveur {
 
     private int grille[][];
@@ -41,7 +40,7 @@ public class Solveur {
      * @param val
      * @return True si il il y a val sur le carré désignée et False si non
      */
-    private boolean verifValDansCarre(int numligne, int numcolonne, int val ) {
+    protected boolean verifValDansCarre(int numligne, int numcolonne, int val ) {
 
         int carrex = numligne-numligne%3;
         int carrey = numcolonne-numcolonne%3;
@@ -67,7 +66,7 @@ public class Solveur {
      * @param tab
      * @return
      */
-    private boolean verifValDansCarre(int numligne, int numcolonne, int val,int[][] tab ) {
+    protected boolean verifValDansCarre(int numligne, int numcolonne, int val,int[][] tab ) {
 
         int carrex = numligne-numligne%3;
         int carrey = numcolonne-numcolonne%3;
@@ -91,7 +90,7 @@ public class Solveur {
      * @param val
      * @return True si il il y a val sur la colonne désignée et False si non
      */
-    private boolean verifValDansColonne(int numcolonne, int val) {
+    protected boolean verifValDansColonne(int numcolonne, int val) {
 
         for (int i = 0; i < TAILLE; i++) {
 
@@ -112,7 +111,7 @@ public class Solveur {
      * @param tab
      * @return
      */
-    private boolean verifValDansColonne(int numcolonne, int val,int[][] tab) {
+    protected boolean verifValDansColonne(int numcolonne, int val,int[][] tab) {
 
         for (int i = 0; i < TAILLE; i++) {
 
@@ -132,7 +131,7 @@ public class Solveur {
      * @param val
      * @return True si il il y a val sur la ligne désignée et False si non
      */
-    private boolean verifValDansLigne(int numligne, int val) {
+    protected boolean verifValDansLigne(int numligne, int val) {
 
         for (int i = 0; i < TAILLE; i++) {
 
@@ -153,7 +152,7 @@ public class Solveur {
      * @param tab
      * @return
      */
-    private boolean verifValDansLigne(int numligne, int val , int[][] tab) {
+    protected boolean verifValDansLigne(int numligne, int val , int[][] tab) {
 
         for (int i = 0; i < TAILLE; i++) {
 

@@ -12,20 +12,29 @@ import javax.swing.JFileChooser;
 public class Main{
 
 	public static void main(String[] args) throws IOException{
+	}
 
+	public void creationGrille(){
+		Tableau tableau = new Tableau();
+		Creer creation = new Creer(tableau);
+		JFrame fenetre = new JFrame("Sudoku");
+		fenetre.addMouseListener(creation);
+		fenetre.setSize(1000, 500);
+	    fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    fenetre.setResizable(false);
+		fenetre.add(creation, BorderLayout.CENTER);
+		fenetre.setVisible(true);
+	}
+
+	public void resoManu(){
 		Tableau tableau = new Tableau();
 		Grille grille = new Grille(tableau);
 		JFrame fenetre = new JFrame("Sudoku");
-
-		//tableau.setValue(0,0,0,1);
-
 		fenetre.addMouseListener(grille);
-		//fenetre.addMouseMotionListener(grille);
 		fenetre.setSize(1000, 500);
 	    fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    fenetre.add(grille, BorderLayout.CENTER);
 	    fenetre.setResizable(false);
-	    //System.out.println("valeur : " + tableau.getValeur(0,0,5));
-	    fenetre.setVisible(true);
+		fenetre.add(grille, BorderLayout.CENTER);
+		fenetre.setVisible(true);
 	}
 }
