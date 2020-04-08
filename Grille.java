@@ -33,10 +33,18 @@ public class Grille extends JComponent implements MouseListener{
 	private int incertnum = 1;
 	Tableau tableau;
 
+	/**
+	 *
+	 * @param tabBase
+	 */
 	public Grille(Tableau tabBase){
 		this.tableau = tabBase;
 	}
 
+	/**
+	 *
+	 * @param pinceau
+	 */
   	@Override
   	protected void paintComponent(Graphics pinceau) {
     	Graphics secondPinceau = pinceau.create();				//On crée une copie du pinceau

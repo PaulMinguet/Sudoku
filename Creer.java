@@ -34,10 +34,18 @@ public class Creer extends JComponent implements MouseListener{
 	private int erreur = 0;
 	Tableau tableau;
 
+	/**
+	 *
+	 * @param grille
+	 */
 	public Creer(Tableau grille){
 		this.tableau = grille;
 	}
 
+	/**
+	 *
+	 * @param pinceau
+	 */
   	@Override
   	protected void paintComponent(Graphics pinceau) {
     	Graphics secondPinceau = pinceau.create();				//On crée une copie du pinceau
@@ -149,6 +157,10 @@ public class Creer extends JComponent implements MouseListener{
 
 	public void mouseReleased(MouseEvent e){}
 
+	/**
+	 *
+	 * @param e
+	 */
 	public void mouseClicked(MouseEvent e){
 		this.clicX = e.getX();
 		this.clicY = e.getY();

@@ -22,6 +22,10 @@ public class Menu extends JComponent implements MouseListener{
 		this.tableau = tabBase;
 	}
 
+	/**
+	 *
+	 * @param pinceau
+	 */
   	@Override
   	protected void paintComponent(Graphics pinceau) {
     	Graphics secondPinceau = pinceau.create();				//On crée une copie du pinceau
@@ -76,6 +80,10 @@ public class Menu extends JComponent implements MouseListener{
 
 	public void mouseReleased(MouseEvent e){}
 
+	/**
+	 *
+	 * @param e
+	 */
 	public void mouseClicked(MouseEvent e){
 		this.clicX = e.getX();
 		this.clicY = e.getY();
