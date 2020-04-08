@@ -33,14 +33,25 @@ public class Creer extends JComponent implements MouseListener{
 	private int incertnum = 1;
 	private int erreur = 0;
 	Tableau tableau;
-	Solveur solveur;
 
 	/**
 	 *
 	 * @param grille
 	 */
 	public Creer(Tableau grille){
-		this.tableau = grille;
+		this.tableau = grille;		
+	}
+
+	public boolean verif(int ligne, int colonne, int valeur, Solveur solvi){
+		boolean x = solvi.verifValDansLigne(ligne, valeur);
+        boolean z = solvi.verifValDansColonne(colonne, valeur);
+		boolean y = solvi.verifValDansCarre(ligne, colonne, valeur);
+        if (!x && !y && !z)
+        {
+        	return true;
+        }else{
+        	return false;
+        }
 	}
 
 	/**
@@ -163,6 +174,7 @@ public class Creer extends JComponent implements MouseListener{
 	 * @param e
 	 */
 	public void mouseClicked(MouseEvent e){
+		Solveur solv = new Solveur(tableau.grille);
 		this.clicX = e.getX();
 		this.clicY = e.getY();
 
@@ -174,7 +186,7 @@ public class Creer extends JComponent implements MouseListener{
 			this.posX = (clicX-(this.getWidth()-this.tailleCase*9)/2)/tailleCase;				//On récupère la place du clic dans le tableau (x et y)
 			this.posY = (clicY-(this.getHeight()-this.tailleCase*9)/2)/tailleCase;
 
-			if(this.addEtat == 0){					//On affiche le tableau de valeurs à gauche s'il n'y a rien sur la case dans tabBase
+			if(this.addEtat == 0){																//On affiche le tableau de valeurs à gauche s'il n'y a rien sur la case dans tabBase
 				this.addEtat++;																	//et s'il n'est pas déjà affiché; Sinon on l'efface
 				repaint();
 			}else if(this.addEtat == 1){
@@ -186,37 +198,33 @@ public class Creer extends JComponent implements MouseListener{
 		/*--------------------------------------------Clics dans le tableau de séléction--------------------------------------------*/
 
 		if(this.addEtat == 1 && this.clicX > ((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2 &&
-		this.clicX < ((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2+3*this.tailleCase && this.clicY > (this.getHeight()-this.tailleCase*3)/2 && this.clicY < (this.getHeight()-this.tailleCase*3)/2+4*this.tailleCase){
+		this.clicX < ((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2+3*this.tailleCase && this.clicY > (this.getHeight()-this.tailleCase*3)/2-30 && this.clicY < (this.getHeight()-this.tailleCase*3)/2-30+4*this.tailleCase){
 			this.clicY = e.getY()-4;							//Si on clique dans le tableau de valeurs
 			this.clicY += 30;
 
 			this.posAddX = (clicX-((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2)/tailleCase;			//On récupère la place du clic dans le tableau (x et y)
 			this.posAddY = ((clicY-((this.getHeight()-this.tailleCase*9)/2-this.tailleCase*3)/2)/tailleCase)-5;
 			this.valAdd = tableau.getValeur(6,posAddY,posAddX);
+			System.out.println("posX = " + this.posX + "; posY = " + this.posY + "; posAddX = " + this.posAddX + "; posAddY = " + this.posAddY + "; valAdd = " + this.valAdd);
 
 			if(this.valAdd == 10){						//Si on clique sur le "X" alors on remplace les valeurs à cette place par 0
 				for (int z = 0; z <= 5 ; z++) {				
 					this.tableau.setValue(z, posY, posX, 0);
-					this.tableau.setValue(z, posY, posX, 0);
-					this.tableau.setValue(z, posY, posX, 0);
-					this.tableau.setValue(z, posY, posX, 0);
-					this.tableau.setValue(z, posY, posX, 0);
-					this.tableau.setValue(z, posY, posX, 0);
+					System.out.println("Supprimer");
 				}
 			}else{										//Sinon on place la valeur choisie dans le tableau utilisateur et on l'affiche sur la grille
 
-				if(solveur.verifValDansCarre(posY, posX, valAdd, tableau.grille) == true){
-					this.erreur = 1;
-				}else if(solveur.verifValDansColonne(posX, valAdd, tableau.grille) == true){
-					this.erreur = 1;
-				}else if(solveur.verifValDansLigne(posY, valAdd, tableau.grille) == true){
-					this.erreur = 1;
-				}else{
+				if(verif(posX, posY, valAdd, solv)){
 					this.erreur = 0;
+					solv.setGrille(posX, posY, valAdd);
+				}else{
+					this.erreur = 1;
 				}
 				if(this.erreur == 0){
 					this.tableau.setValue(0, posY, posX, valAdd);
-				}else{}
+					System.out.println("0 err");
+				}else{
+				}
 				this.addEtat--;									//On efface le tableau de valeurs à gauche
 				repaint();
 			}

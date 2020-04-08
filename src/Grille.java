@@ -39,6 +39,35 @@ public class Grille extends JComponent implements MouseListener{
 	 */
 	public Grille(Tableau tabBase){
 		this.tableau = tabBase;
+		JFileChooser dialogue = new JFileChooser(new File("."));
+				File fichier;
+				if(dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+					fichier = dialogue.getSelectedFile();
+					FileInputStream fis = null;
+					try{
+						fis = new FileInputStream(fichier);										//On écrit les valeurs du fichier dans les tableaux et dans la grille.
+						int b;
+						for(k = 0; k <= 5; k++){
+							for(i = 0; i < 9; i++){
+								for(j = 0; j < 9; j++){
+									b = fis.read()-48;	
+									this.tableau.setValue(k,i,j,b);
+									/*if((j+1)%3 == 0){
+										fos.write(" ".getBytes());
+									}*/
+									if((i*9+(j+1))%9 == 0){
+										fis.read();
+									}
+								}
+							}
+							fis.read();
+						}
+						fis.close();
+					}catch(IOException ioe){
+						ioe.printStackTrace();
+					}
+					repaint();
+				}
 	}
 
 	/**
@@ -131,18 +160,6 @@ public class Grille extends JComponent implements MouseListener{
 		secondPinceau.setColor(Color.black);
     	secondPinceau.drawRoundRect(this.x, this.y, this.tailleCase*3, this.tailleCase, this.tailleCase, this.tailleCase);
     	secondPinceau.drawString("Sauvegarder", this.x+3*this.tailleCase/4, this.y+2*this.tailleCase/3);	
-
-    	/*---------------------------------------------Bouton Importer---------------------------------------------*/
-
-	    this.x = (this.getWidth()-this.tailleCase*4);						//Positionner le bouton Sauvegarde
-	    this.y = 3*((this.getHeight()-this.tailleCase*3)/8);
-
-	    secondPinceau.setColor(new Color(128, 208, 255));					//Afficher le bouton "Importer"
-	    secondPinceau.setFont(new Font("default", Font.BOLD, tailleCase/4));
-		secondPinceau.fillRoundRect(this.x, this.y, this.tailleCase*3, this.tailleCase, this.tailleCase, this.tailleCase);
-		secondPinceau.setColor(Color.black);
-    	secondPinceau.drawRoundRect(this.x, this.y, this.tailleCase*3, this.tailleCase, this.tailleCase, this.tailleCase);
-    	secondPinceau.drawString("Importer", this.x+3*this.tailleCase/4, this.y+2*this.tailleCase/3);	
 
     	/*---------------------------------------------Bouton Résoudre---------------------------------------------*/
 
@@ -304,41 +321,6 @@ public class Grille extends JComponent implements MouseListener{
 					}catch(IOException ioe){
 						ioe.printStackTrace();
 					}
-				}
-			}
-
-		/*--------------------------------------------Clics Import--------------------------------------------*/
-			if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&					//Si on clique sur le bouton "Importer"
-				this.clicY > 3*((this.getHeight()-this.tailleCase*3)/8)+30 && this.clicY < 3*((this.getHeight()-this.tailleCase*3)/8)+this.tailleCase+30){
-				System.out.println("Import");
-				JFileChooser dialogue = new JFileChooser(new File("."));
-				File fichier;
-				if(dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-					fichier = dialogue.getSelectedFile();
-					FileInputStream fis = null;
-					try{
-						fis = new FileInputStream(fichier);										//On écrit les valeurs du fichier dans les tableaux et dans la grille.
-						int b;
-						for(k = 0; k <= 5; k++){
-							for(i = 0; i < 9; i++){
-								for(j = 0; j < 9; j++){
-									b = fis.read()-48;	
-									this.tableau.setValue(k,i,j,b);
-									/*if((j+1)%3 == 0){
-										fos.write(" ".getBytes());
-									}*/
-									if((i*9+(j+1))%9 == 0){
-										fis.read();
-									}
-								}
-							}
-							fis.read();
-						}
-						fis.close();
-					}catch(IOException ioe){
-						ioe.printStackTrace();
-					}
-					repaint();
 				}
 			}
 
