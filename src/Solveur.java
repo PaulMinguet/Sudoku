@@ -59,31 +59,6 @@ public class Solveur {
         return false;
     }
 
-    /**
-     *
-     * @param numligne
-     * @param numcolonne
-     * @param val
-     * @param tab
-     * @return
-     */
-    protected boolean verifValDansCarre(int numligne, int numcolonne, int val,int[][] tab ) {
-
-        int carrex = numligne-numligne%3;
-        int carrey = numcolonne-numcolonne%3;
-
-        for (int i = carrex; i < carrex + 3; i++) {
-            for (int j = carrey; j < carrey + 3; j++) {
-
-                if (tab[i][j] == val) {
-
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 
     /**
      *
@@ -105,26 +80,6 @@ public class Solveur {
         return false;
     }
 
-    /**
-     *
-     * @param numcolonne
-     * @param val
-     * @param tab
-     * @return
-     */
-    protected boolean verifValDansColonne(int numcolonne, int val,int[][] tab) {
-
-        for (int i = 0; i < TAILLE; i++) {
-
-            if (tab[i][numcolonne] == val) {
-
-                return true;
-            }
-        }
-
-
-        return false;
-    }
 
     /**
      *
@@ -137,27 +92,6 @@ public class Solveur {
         for (int i = 0; i < TAILLE; i++) {
 
             if (this.grille[numligne][i] == val) {
-
-                return true;
-            }
-        }
-
-        return false;
-
-    }
-
-    /**
-     *
-     * @param numligne
-     * @param val
-     * @param tab
-     * @return
-     */
-    protected boolean verifValDansLigne(int numligne, int val , int[][] tab) {
-
-        for (int i = 0; i < TAILLE; i++) {
-
-            if (tab[numligne][i] == val) {
 
                 return true;
             }

@@ -33,13 +33,15 @@ public class Creer extends JComponent implements MouseListener{
 	private int incertnum = 1;
 	private int erreur = 0;
 	Tableau tableau;
+	Solveur solv;
 
 	/**
 	 *
 	 * @param grille
 	 */
 	public Creer(Tableau grille){
-		this.tableau = grille;		
+		this.tableau = grille;
+		this.solv = new Solveur(tableau.grille);
 	}
 
 	public boolean verif(int ligne, int colonne, int valeur, Solveur solvi){
@@ -174,7 +176,7 @@ public class Creer extends JComponent implements MouseListener{
 	 * @param e
 	 */
 	public void mouseClicked(MouseEvent e){
-		Solveur solv = new Solveur(tableau.grille);
+		
 		this.clicX = e.getX();
 		this.clicY = e.getY();
 
@@ -214,7 +216,7 @@ public class Creer extends JComponent implements MouseListener{
 				}
 			}else{										//Sinon on place la valeur choisie dans le tableau utilisateur et on l'affiche sur la grille
 
-				if(verif(posX, posY, valAdd, solv)){
+				if(verif(posX, posY, valAdd, this.solv)){
 					this.erreur = 0;
 					solv.setGrille(posX, posY, valAdd);
 				}else{
