@@ -1,3 +1,4 @@
+
 public class Solveur {
 
     private int grille[][];
@@ -40,7 +41,7 @@ public class Solveur {
      * @param val
      * @return True si il il y a val sur le carré désignée et False si non
      */
-    protected boolean verifValDansCarre(int numligne, int numcolonne, int val ) {
+    private boolean verifValDansCarre(int numligne, int numcolonne, int val ) {
 
         int carrex = numligne-numligne%3;
         int carrey = numcolonne-numcolonne%3;
@@ -66,7 +67,7 @@ public class Solveur {
      * @param tab
      * @return
      */
-    protected boolean verifValDansCarre(int numligne, int numcolonne, int val,int[][] tab ) {
+    private boolean verifValDansCarre(int numligne, int numcolonne, int val,int[][] tab ) {
 
         int carrex = numligne-numligne%3;
         int carrey = numcolonne-numcolonne%3;
@@ -90,7 +91,7 @@ public class Solveur {
      * @param val
      * @return True si il il y a val sur la colonne désignée et False si non
      */
-    protected boolean verifValDansColonne(int numcolonne, int val) {
+    private boolean verifValDansColonne(int numcolonne, int val) {
 
         for (int i = 0; i < TAILLE; i++) {
 
@@ -111,7 +112,7 @@ public class Solveur {
      * @param tab
      * @return
      */
-    protected boolean verifValDansColonne(int numcolonne, int val,int[][] tab) {
+    private boolean verifValDansColonne(int numcolonne, int val,int[][] tab) {
 
         for (int i = 0; i < TAILLE; i++) {
 
@@ -131,7 +132,7 @@ public class Solveur {
      * @param val
      * @return True si il il y a val sur la ligne désignée et False si non
      */
-    protected boolean verifValDansLigne(int numligne, int val) {
+    private boolean verifValDansLigne(int numligne, int val) {
 
         for (int i = 0; i < TAILLE; i++) {
 
@@ -146,13 +147,13 @@ public class Solveur {
     }
 
     /**
-     * 
+     *
      * @param numligne
      * @param val
      * @param tab
      * @return
      */
-    protected boolean verifValDansLigne(int numligne, int val , int[][] tab) {
+    private boolean verifValDansLigne(int numligne, int val , int[][] tab) {
 
         for (int i = 0; i < TAILLE; i++) {
 
