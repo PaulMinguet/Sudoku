@@ -15,11 +15,15 @@ public class Main{
 
 		Tableau tableau = new Tableau();
 		Grille grille = new Grille(tableau);
+		Menu menu = new Menu(tableau);
+		Creer creation = new Creer(tableau);
 		JFrame fenetre = new JFrame("Sudoku");
 
 		//tableau.setValue(0,0,0,1);
 
 		fenetre.addMouseListener(grille);
+		fenetre.addMouseListener(menu);
+		fenetre.addMouseListener(creation);
 		//fenetre.addMouseMotionListener(grille);
 		fenetre.setSize(1000, 500);
 	    fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

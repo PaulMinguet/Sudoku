@@ -337,6 +337,21 @@ public class Grille extends JComponent implements MouseListener{
 		/*--------------------------------------------Clics Résolution--------------------------------------------*/
 			if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&
 				this.clicY > 5*((this.getHeight()-this.tailleCase*3)/8)+30 && this.clicY < 5*((this.getHeight()-this.tailleCase*3)/8)+this.tailleCase+30){
+				for(i = 0; i < 9; i++){
+					for(j = 0; j < 9; j++){
+						if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) == 0){
+							this.valAdd = 0;
+							System.out.println("0");
+						}else if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) != 0){
+							this.valAdd = this.tableau.getValeur(5, i, j);
+							System.out.println(this.tableau.getValeur(5,i,j));
+						}else if(this.tableau.getValeur(0, i, j) != 0 && this.tableau.getValeur(5, i, j) == 0){
+							this.valAdd = this.tableau.getValeur(0, i, j);
+							System.out.println(this.tableau.getValeur(0,i,j));
+						}
+						this.tableau.setValueGrille(i,j,valAdd);
+					}
+				}
 			}
 		}
 	}

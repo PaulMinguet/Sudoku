@@ -68,6 +68,16 @@ public class Tableau{
 						{7,8,9},
 						{0,10,0}}};
 
+	int[][] grille = 	{{0,0,0,0,0,0,0,0,0},
+						{0,0,0,0,0,0,0,0,0},
+						{0,0,0,0,0,0,0,0,0},
+						{0,0,0,0,0,0,0,0,0},
+						{0,0,0,0,0,0,0,0,0},
+						{0,0,0,0,0,0,0,0,0},
+						{0,0,0,0,0,0,0,0,0},
+						{0,0,0,0,0,0,0,0,0},
+						{0,0,0,0,0,0,0,0,0}};
+
 
 	public int[][] getTab(int[][] tabRec){					//Méthode pour récupérer un tableau			
 		return tabRec;
@@ -76,6 +86,10 @@ public class Tableau{
 	public void setValue(int type, int x, int y, int value){	//Méthode pour définir une valeur dans le tableau "type"
 		tabBase[type][x][y]=value;
 	}	
+
+	public void setValueGrille(int x, int y, int value){	//Méthode pour définir une valeur dans le tableau "type"
+		grille[x][y]=value;
+	}
 
 	public int getValeur(int type, int x, int y){				//Méthode pour récupérer la valeur d'un tableau
 		return tabBase[type][x][y];
