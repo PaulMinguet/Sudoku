@@ -41,30 +41,41 @@ public class Solveur {
      * @param val
      * @return True si il il y a val sur le carré désignée et False si non
      */
-    private boolean verifValDansCarre(int numligne, int numcolonne, int val) {
+    private boolean verifValDansCarre(int numligne, int numcolonne, int val ) {
 
         int carrex = numligne-numligne%3;
         int carrey = numcolonne-numcolonne%3;
-/*
-            if (numligne <= 2){
-                carrex = 0;
-            }else if(numligne>2 && numligne <= 5){
-                carrex = 2;
-            }else if(numligne>5){
-                carrex = 5;
-            }
-            if (numcolonne <= 2){
-                carrey = 0;
-            }else if(numcolonne>2 && numcolonne <= 5){
-                carrey = 2;
-            }else if (numcolonne>5){
-                carrey = 5;
-            }
-*/
+
         for (int i = carrex; i < carrex + 3; i++) {
             for (int j = carrey; j < carrey + 3; j++) {
 
                 if (this.grille[i][j] == val) {
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * @param numligne
+     * @param numcolonne
+     * @param val
+     * @param tab
+     * @return
+     */
+    private boolean verifValDansCarre(int numligne, int numcolonne, int val,int[][] tab ) {
+
+        int carrex = numligne-numligne%3;
+        int carrey = numcolonne-numcolonne%3;
+
+        for (int i = carrex; i < carrex + 3; i++) {
+            for (int j = carrey; j < carrey + 3; j++) {
+
+                if (tab[i][j] == val) {
 
                     return true;
                 }
@@ -96,6 +107,27 @@ public class Solveur {
 
     /**
      *
+     * @param numcolonne
+     * @param val
+     * @param tab
+     * @return
+     */
+    private boolean verifValDansColonne(int numcolonne, int val,int[][] tab) {
+
+        for (int i = 0; i < TAILLE; i++) {
+
+            if (tab[i][numcolonne] == val) {
+
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+
+    /**
+     *
      * @param numligne
      * @param val
      * @return True si il il y a val sur la ligne désignée et False si non
@@ -105,6 +137,27 @@ public class Solveur {
         for (int i = 0; i < TAILLE; i++) {
 
             if (this.grille[numligne][i] == val) {
+
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+    /**
+     * 
+     * @param numligne
+     * @param val
+     * @param tab
+     * @return
+     */
+    private boolean verifValDansLigne(int numligne, int val , int[][] tab) {
+
+        for (int i = 0; i < TAILLE; i++) {
+
+            if (tab[numligne][i] == val) {
 
                 return true;
             }
