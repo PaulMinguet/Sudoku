@@ -212,7 +212,7 @@ public class Creer extends JComponent implements MouseListener{
 			if(this.valAdd == 10){						//Si on clique sur le "X" alors on remplace les valeurs à cette place par 0
 				for (int z = 0; z <= 5 ; z++) {				
 					this.tableau.setValue(z, posY, posX, 0);
-					System.out.println("Supprimer");
+					solv.setGrille(posX, posY, 0);
 				}
 			}else{										//Sinon on place la valeur choisie dans le tableau utilisateur et on l'affiche sur la grille
 
@@ -225,8 +225,7 @@ public class Creer extends JComponent implements MouseListener{
 				if(this.erreur == 0){
 					this.tableau.setValue(0, posY, posX, valAdd);
 					System.out.println("0 err");
-				}else{
-				}
+				}else{}
 				this.addEtat--;									//On efface le tableau de valeurs à gauche
 				repaint();
 			}
@@ -236,8 +235,22 @@ public class Creer extends JComponent implements MouseListener{
 		if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&				//Si on clique sur le bouton "Sauvergarder"
 			this.clicY > (this.getHeight()-this.tailleCase*3)/8+30 && this.clicY < (this.getHeight()-this.tailleCase*3)/8+this.tailleCase+30){
 			//System.out.println("Save");
-			String numerique = "";
-			String hexa = "";
+			for(i = 0; i < 9; i++){
+					for(j = 0; j < 9; j++){
+						if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) == 0){
+							this.valAdd = 0;
+							System.out.println("0");
+						}else if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) != 0){
+							this.valAdd = this.tableau.getValeur(5, i, j);
+							System.out.println(this.tableau.getValeur(5,i,j));
+						}else if(this.tableau.getValeur(0, i, j) != 0 && this.tableau.getValeur(5, i, j) == 0){
+							this.valAdd = this.tableau.getValeur(0, i, j);
+							System.out.println(this.tableau.getValeur(0,i,j));
+						}
+						this.tableau.setValueGrille(i,j,valAdd);
+					}
+				}
+
 			JFileChooser dialogue = new JFileChooser(new File("."));						//On ouvre une fenêtre de dialogue de sauvegarde
 			File fichier;
 			if(dialogue.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
@@ -246,25 +259,14 @@ public class Creer extends JComponent implements MouseListener{
 				try{
 					fos = new FileOutputStream(fichier);									//On écrit les valeurs de tous les tableaux dans le fichier choisi
 					byte[] buf = new byte[72];
-					for(k = 0; k <= 5; k++){
 						for(i = 0; i < 9; i++){
 							for(j = 0; j < 9; j++){
-								buf = this.tableau.getValeurString(k, i, j).getBytes();
+								buf = this.tableau.getValeurGrilleString(i, j).getBytes();
 								fos.write(buf);
-								/*if(j%9 == 0){
-									String st = String.format("%02X", buf);
-									fos.write(buf);
-								}else{}*/
-								/*if((j+1)%3 == 0){
-									fos.write(" ".getBytes());
-								}*/
-								if((i*9+(j+1))%9 == 0){
-									fos.write("\n".getBytes());
-								}
 							}
+							buf = "\n".getBytes();
+							fos.write(buf);
 						}
-						fos.write("\n".getBytes());
-					}
 					fos.close();
 				}catch(IOException ioe){
 					ioe.printStackTrace();
@@ -276,35 +278,8 @@ public class Creer extends JComponent implements MouseListener{
 		if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&					//Si on clique sur le bouton "Importer"
 			this.clicY > 3*((this.getHeight()-this.tailleCase*3)/8)+30 && this.clicY < 3*((this.getHeight()-this.tailleCase*3)/8)+this.tailleCase+30){
 			System.out.println("Import");
-			JFileChooser dialogue = new JFileChooser(new File("."));
-			File fichier;
-			if(dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-				fichier = dialogue.getSelectedFile();
-				FileInputStream fis = null;
-				try{
-					fis = new FileInputStream(fichier);										//On écrit les valeurs du fichier dans les tableaux et dans la grille.
-					int b;
-					for(k = 0; k <= 5; k++){
-						for(i = 0; i < 9; i++){
-							for(j = 0; j < 9; j++){
-								b = fis.read()-48;	
-								this.tableau.setValue(k,i,j,b);
-								/*if((j+1)%3 == 0){
-									fos.write(" ".getBytes());
-								}*/
-								if((i*9+(j+1))%9 == 0){
-									fis.read();
-								}
-							}
-						}
-						fis.read();
-					}
-					fis.close();
-				}catch(IOException ioe){
-					ioe.printStackTrace();
-				}
-				repaint();
-			}
+			this.tableau.importer();
+			repaint();
 		}
 	}
 }

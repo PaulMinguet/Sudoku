@@ -31,7 +31,9 @@ public class Grille extends JComponent implements MouseListener{
 	private int valAdd;
 	private int incertitude = 0;
 	private int incertnum = 1;
+    private int erreur = 0;
 	Tableau tableau;
+	Solveur solv;
 
 	/**
 	 *
@@ -40,34 +42,58 @@ public class Grille extends JComponent implements MouseListener{
 	public Grille(Tableau tabBase){
 		this.tableau = tabBase;
 		JFileChooser dialogue = new JFileChooser(new File("."));
-				File fichier;
-				if(dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-					fichier = dialogue.getSelectedFile();
-					FileInputStream fis = null;
-					try{
-						fis = new FileInputStream(fichier);										//On écrit les valeurs du fichier dans les tableaux et dans la grille.
-						int b;
-						for(k = 0; k <= 5; k++){
-							for(i = 0; i < 9; i++){
-								for(j = 0; j < 9; j++){
-									b = fis.read()-48;	
-									this.tableau.setValue(k,i,j,b);
-									/*if((j+1)%3 == 0){
-										fos.write(" ".getBytes());
-									}*/
-									if((i*9+(j+1))%9 == 0){
-										fis.read();
-									}
-								}
+		File fichier;
+		if(dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+			fichier = dialogue.getSelectedFile();
+			FileInputStream fis = null;
+			try{
+				fis = new FileInputStream(fichier);										//On écrit les valeurs du fichier dans les tableaux et dans la grille.
+				int b;
+					for(i = 0; i < 9; i++){
+						for(j = 0; j < 9; j++){
+							b = fis.read()-48;	
+							this.tableau.setValue(0,i,j,b);
+							if((i*9+(j+1))%9 == 0){
+								fis.read();
 							}
-							fis.read();
 						}
-						fis.close();
-					}catch(IOException ioe){
-						ioe.printStackTrace();
 					}
-					repaint();
+					fis.read();
+				fis.close();
+			}catch(IOException ioe){
+				ioe.printStackTrace();
+			}
+			repaint();
+		}
+		for(i = 0; i < 9; i++){
+			for(j = 0; j < 9; j++){
+				if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) == 0){
+					this.valAdd = 0;
+					System.out.print("0");
+				}else if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) != 0){
+					this.valAdd = this.tableau.getValeur(5, i, j);
+					System.out.print(this.tableau.getValeur(5,i,j));
+				}else if(this.tableau.getValeur(0, i, j) != 0 && this.tableau.getValeur(5, i, j) == 0){
+					this.valAdd = this.tableau.getValeur(0, i, j);
+					System.out.print(this.tableau.getValeur(0,i,j));
 				}
+				this.tableau.setValueGrille(j,i,valAdd);
+			}
+			System.out.println("");
+		}
+		this.solv = new Solveur(tableau.grille);
+	}
+
+	public boolean verif(int ligne, int colonne, int valeur, Solveur solvi){
+		boolean x = solvi.verifValDansLigne(ligne, valeur);
+        boolean z = solvi.verifValDansColonne(colonne, valeur);
+		boolean y = solvi.verifValDansCarre(ligne, colonne, valeur);
+        if (!x && !y && !z)
+        {
+        	return true;
+        }else{
+        	return false;
+        }
 	}
 
 	/**
@@ -83,6 +109,7 @@ public class Grille extends JComponent implements MouseListener{
     	}
 
     	//Dessin ici ------------------------------------------- 
+
     	secondPinceau.setColor(Color.lightGray);
 
     	if(this.getWidth()/this.getHeight() < 1){				//Définir la taille d'une case en fonction de celle de la fenêtre
@@ -163,7 +190,7 @@ public class Grille extends JComponent implements MouseListener{
 
     	/*---------------------------------------------Bouton Résoudre---------------------------------------------*/
 
-	    this.x = (this.getWidth()-this.tailleCase*4);						//Positionner le bouton Résoudre
+	    /*this.x = (this.getWidth()-this.tailleCase*4);						//Positionner le bouton Résoudre
 	    this.y = 5*((this.getHeight()-this.tailleCase*3)/8);
 
 	    secondPinceau.setColor(new Color(128, 208, 255));					//Afficher le bouton "Résoudre"
@@ -171,7 +198,7 @@ public class Grille extends JComponent implements MouseListener{
 		secondPinceau.fillRoundRect(this.x, this.y, this.tailleCase*3, this.tailleCase, this.tailleCase, this.tailleCase);
 		secondPinceau.setColor(Color.black);
     	secondPinceau.drawRoundRect(this.x, this.y, this.tailleCase*3, this.tailleCase, this.tailleCase, this.tailleCase);
-    	secondPinceau.drawString("Résoudre", this.x+3*this.tailleCase/4, this.y+2*this.tailleCase/3);
+    	secondPinceau.drawString("Résoudre", this.x+3*this.tailleCase/4, this.y+2*this.tailleCase/3);*/
 
     	/*---------------------------------------------Tableau valeurs gauche---------------------------------------------*/
 
@@ -196,6 +223,19 @@ public class Grille extends JComponent implements MouseListener{
 	    	secondPinceau.drawRect(this.x+tailleCase, this.y+j*tailleCase, this.tailleCase, this.tailleCase);
 	    	secondPinceau.drawString("X", this.x+tailleCase+(3/2)*(this.tailleCase/3), this.y+j*tailleCase+2*this.tailleCase/3);
 	    }
+	    /*------Vérification------*/
+		if(this.tableau.verifFin()){
+	    	System.out.println("Bravo !");
+	    	this.x = (this.getWidth()/2-3*this.tailleCase);						//Positionner le bouton Sauvegarde
+		    this.y = (this.getHeight()/2-this.tailleCase);
+
+		    secondPinceau.setColor(Color.red);					//Afficher le bouton "Sauvegarder"
+		    secondPinceau.setFont(new Font("default", Font.BOLD, tailleCase/2));
+			secondPinceau.fillRoundRect(this.x, this.y, this.tailleCase*6, this.tailleCase*2, this.tailleCase, this.tailleCase);
+			secondPinceau.setColor(Color.black);
+	    	secondPinceau.drawRoundRect(this.x, this.y, this.tailleCase*6, this.tailleCase*2, this.tailleCase, this.tailleCase);
+	    	secondPinceau.drawString("Bravo !", this.x+2*this.tailleCase, this.y+this.tailleCase);
+		}
   	}
 
   	/*----------------------------------------------------------------------------------------------Interactions avec la souris----------------------------------------------------------------------------------------------*/
@@ -210,13 +250,12 @@ public class Grille extends JComponent implements MouseListener{
 
 	public void mouseClicked(MouseEvent e){
 		this.clicX = e.getX();
-		this.clicY = e.getY();
+		this.clicY = e.getY()-30;		//-30 pour prendre en compte le bandeau
 
 		/*--------------------------------------------Clics dans la grille--------------------------------------------*/
 
 		if(this.clicX > (this.getWidth()-this.tailleCase*9)/2 && this.clicX < (tailleCase*9+(this.getWidth()-this.tailleCase*9)/2) &&		//Si on clique dans la grille
 			this.clicY > (this.getHeight()-this.tailleCase*9)/2 && this.clicY < (tailleCase*9+(this.getHeight()-this.tailleCase*9)/2)){
-			this.clicY = e.getY()-30;
 			this.posX = (clicX-(this.getWidth()-this.tailleCase*9)/2)/tailleCase;				//On récupère la place du clic dans le tableau (x et y)
 			this.posY = (clicY-(this.getHeight()-this.tailleCase*9)/2)/tailleCase;
 
@@ -253,11 +292,10 @@ public class Grille extends JComponent implements MouseListener{
 				this.valAdd = tableau.getValeur(6,posAddY,posAddX);
 
 				if(this.valAdd == 10){							//Si on clique sur le "X" alors on remplace les valeurs à cette place par 0
-					this.tableau.setValue(1, posY, posX, 0);
-					this.tableau.setValue(2, posY, posX, 0);
-					this.tableau.setValue(3, posY, posX, 0);
-					this.tableau.setValue(4, posY, posX, 0);
-					this.tableau.setValue(5, posY, posX, 0);
+					for (int z = 0; z <= 5 ; z++) {			
+						this.tableau.setValue(z, posY, posX, 0);
+					}
+					solv.setGrille(posX, posY, 0);
 				}else{
 					if(this.incertitude == 1 && this.tableau.getValeur(0, posY, posX) == 0){		//Si le bouton incertitude est cliqué
 						if(this.tableau.getValeur(1, posY, posX) == 0){								//S'il n'y a pas de valeur en haut à gauche de la case
@@ -277,7 +315,21 @@ public class Grille extends JComponent implements MouseListener{
 							}
 						}
 					}else{										//Sinon on place la valeur choisie dans le tableau utilisateur et on l'affiche sur la grille
-						this.tableau.setValue(5, posY, posX, valAdd);
+						if(verif(posX, posY, valAdd, this.solv)){
+							this.erreur = 0;
+							solv.setGrille(posX, posY, valAdd);
+							if(this.tableau.getValeur(1, posY, posX) != 0 || this.tableau.getValeur(2, posY, posX) != 0 || this.tableau.getValeur(3, posY, posX) != 0 || this.tableau.getValeur(4, posY, posX) != 0){
+								for (int z = 1; z <= 4 ; z++) {				
+									this.tableau.setValue(z, posY, posX, 0);
+								}
+							}
+							this.tableau.setValueGrille(posX, posY, valAdd);
+							this.tableau.setValue(5, posY, posX, valAdd);
+							
+
+						}else{
+							this.erreur = 1;
+						}
 					}
 				}
 				this.addEtat--;									//On efface le tableau de valeurs à gauche
@@ -303,13 +355,6 @@ public class Grille extends JComponent implements MouseListener{
 								for(j = 0; j < 9; j++){
 									buf = this.tableau.getValeurString(k, i, j).getBytes();
 									fos.write(buf);
-									/*if(j%9 == 0){
-										String st = String.format("%02X", buf);
-										fos.write(buf);
-									}else{}*/
-									/*if((j+1)%3 == 0){
-										fos.write(" ".getBytes());
-									}*/
 									if((i*9+(j+1))%9 == 0){
 										fos.write("\n".getBytes());
 									}
@@ -325,7 +370,7 @@ public class Grille extends JComponent implements MouseListener{
 			}
 
 		/*--------------------------------------------Clics Résolution--------------------------------------------*/
-			if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&
+			/*if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&
 				this.clicY > 5*((this.getHeight()-this.tailleCase*3)/8)+30 && this.clicY < 5*((this.getHeight()-this.tailleCase*3)/8)+this.tailleCase+30){
 				for(i = 0; i < 9; i++){
 					for(j = 0; j < 9; j++){
@@ -342,7 +387,7 @@ public class Grille extends JComponent implements MouseListener{
 						this.tableau.setValueGrille(i,j,valAdd);
 					}
 				}
-			}
+			}*/
 		}
 	}
 }
