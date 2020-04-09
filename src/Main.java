@@ -43,7 +43,7 @@ public class Main{
 					break;
 
 					case AUTOMATIQUE:
-					Main.resolutionAuto();
+					//Main.resolutionAuto();
 					break;
 
 					default:
@@ -84,7 +84,7 @@ public class Main{
 		fenetre.add(grille, BorderLayout.CENTER);
 		fenetre.setVisible(true);
 	}
-		public static void resolutionAuto(){
+		/*public static void resolutionAuto(){
 		Solveur resolv = new Solveur();
 		resolv.resolution();
 		Grilleauto auto = new Grilleauto(resolv.getGrilleResolue(),resolv.getTimerToString());
@@ -94,5 +94,5 @@ public class Main{
 		fenetre.setResizable(false);
 		fenetre.add(auto, BorderLayout.CENTER);
 		fenetre.setVisible(true);
-	}
+	}*/
 }
