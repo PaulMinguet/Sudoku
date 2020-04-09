@@ -154,15 +154,15 @@ public class Tableau{
 	public boolean verifFin(){
 		boolean fini = false;
 		int f = 0;
-		System.out.println("\n**Verification**");
+		//System.out.println("\n**Verification**");
 		for(j = 0; j < 9; j++){
 			for(i = 0; i < 9; i++){
-				System.out.print(getValeurGrille(i,j));
+				//System.out.print(getValeurGrille(i,j));
 				if(getValeurGrille(i,j) == 0){
 					f = 1;
 				}
 			}
-			System.out.println("");
+			//System.out.println("");
 		}
 		if(f == 0){
 			fini = true;
@@ -218,7 +218,7 @@ public class Tableau{
 				DataInputStream lire = new DataInputStream(fis);
 				for(i = 0; i < 9; i++){
 					buffer[i] = lire.readInt();
-					System.out.println(Integer.toString(buffer[i]));
+					//System.out.println(Integer.toString(buffer[i]));
 				}
 				try{
 					lire.close();
@@ -231,16 +231,18 @@ public class Tableau{
 			}
 			for(i = 0; i < 9; i++){
 				buf = Integer.toString(buffer[i]);
-				System.out.println("buf length = " + buf.length());
+				//System.out.println("buf length = " + buf.length());
 				for(j = 0; j < 9; j++){	
 					if(j-(9-buf.length()) >= 0){
-						System.out.println(buf);
-						System.out.print("; j = "+j);
-						System.out.println("; New buf = " + buf);
+						//System.out.println(buf);
+						//System.out.print("; j = "+j);
+						//System.out.println("; New buf = " + buf);
 						setValue(0,i,j,Integer.parseInt(buf.substring(j-(9-buf.length()),j-(9-buf.length())+1)));
+						setValueGrille(i,j,Integer.parseInt(buf.substring(j-(9-buf.length()),j-(9-buf.length())+1)));
 					}else{
-						System.out.print("0");
+						//System.out.print("0");
 						setValue(0,i,j,0);
+						setValueGrille(i,j,0);
 					}
 				}
 			}

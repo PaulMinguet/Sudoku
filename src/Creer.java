@@ -38,20 +38,20 @@ public class Creer extends JComponent implements MouseListener{
 
 	/**
 	 *
-	 * @param grille
+	 * @param grille représente le tableau que prend en argument le constructeur de Creer pour les interactions entre Creer et Tableau (via this.tableau)
 	 */
 	public Creer(Tableau grille){
 		this.tableau = grille;
 		this.solv = new Solveur(tableau.grille);
 	}
 
-	public boolean verif(int ligne, int colonne, int valeur, Solveur solvi){
-		boolean x = solvi.verifValDansLigne(ligne, valeur);
-        boolean z = solvi.verifValDansColonne(colonne, valeur);
-		boolean y = solvi.verifValDansCarre(ligne, colonne, valeur);
+	public boolean verif(int ligne, int colonne, int valeur, Solveur solvi){		//méthode pour vérifier si l'utilisateur a le droit de mettre une valeur à un certain endroit
+		boolean x = solvi.verifValDansLigne(ligne, valeur);							//Vérifie s'il n'y a pas déjà la même valeur sur la même ligne
+        boolean z = solvi.verifValDansColonne(colonne, valeur);						//Vérifie s'il n'y a pas déjà la même valeur sur la même colonne
+		boolean y = solvi.verifValDansCarre(ligne, colonne, valeur);				//Vérifie s'il n'y a pas déjà la même valeur dans le même bloc
         if (!x && !y && !z)
         {
-        	return true;
+        	return true;															//Renvoie vrai si l'utilisateur peut poser sa valeur, faux sinon
         }else{
         	return false;
         }
@@ -101,12 +101,12 @@ public class Creer extends JComponent implements MouseListener{
     			secondPinceau.setColor(Color.black);
     			secondPinceau.setFont(new Font("default", Font.BOLD, tailleCase/2));
 		    	secondPinceau.drawRect(this.x+i*tailleCase, this.y+j*tailleCase, this.tailleCase, this.tailleCase);	//On dessine une case
-		    	if (this.tableau.getValeur(0,j,i) != 0){		//Si la valeur dans le tableau de base est différente de 0, on affiche la valeur dans la case créée
+		    	if (this.tableau.getValeur(0,j,i) != 0){															//Si la valeur dans le tableau de base est différente de 0, on affiche la valeur dans la case créée
 		    		secondPinceau.drawString(this.tableau.getValeurString(0,j,i), this.x+i*tailleCase+(this.tailleCase/3), this.y+j*tailleCase+2*this.tailleCase/3);
-		    	}else{																				//Sinon, on affiche les valeurs dans le tableau de l'utilisateur
-		    		secondPinceau.setColor(Color.blue);												//Afficher tableau utilisateur
+		    	}else{																								//Sinon, on affiche les valeurs dans le tableau de l'utilisateur
+		    		secondPinceau.setColor(Color.blue);																//Afficher tableau utilisateur
 		    		secondPinceau.setFont(new Font("default", Font.PLAIN, tailleCase/2));
-		    		if (this.tableau.getValeur(5,j,i) != 0){										//Si il n'y a rien dans le tableau de base à la même place, on affiche, sinon rien
+		    		if (this.tableau.getValeur(5,j,i) != 0){														//Si il n'y a rien dans le tableau de base à la même place, on affiche, sinon rien
 		    			secondPinceau.drawString(this.tableau.getValeurString(5,j,i), this.x+i*tailleCase+(this.tailleCase/3), this.y+j*tailleCase+2*this.tailleCase/3);
 		    		}
 		    	}
@@ -127,7 +127,7 @@ public class Creer extends JComponent implements MouseListener{
 
     	/*---------------------------------------------Bouton Importer---------------------------------------------*/
 
-	    this.x = (this.getWidth()-this.tailleCase*4);						//Positionner le bouton Sauvegarde
+	    this.x = (this.getWidth()-this.tailleCase*4);						//Positionner le bouton Importer
 	    this.y = 3*((this.getHeight()-this.tailleCase*3)/8);
 
 	    secondPinceau.setColor(new Color(128, 208, 255));					//Afficher le bouton "Importer"
@@ -174,11 +174,11 @@ public class Creer extends JComponent implements MouseListener{
 
 	/**
 	 *
-	 * @param e
+	 * @param e représente l'évènement lorsque la souris est cliquée
 	 */
 	public void mouseClicked(MouseEvent e){
 		
-		this.clicX = e.getX();
+		this.clicX = e.getX();						//On récupère les coordonnées de la souris lors du clic
 		this.clicY = e.getY();
 
 		/*--------------------------------------------Clics dans la grille--------------------------------------------*/
@@ -186,11 +186,11 @@ public class Creer extends JComponent implements MouseListener{
 		if(this.clicX > (this.getWidth()-this.tailleCase*9)/2 && this.clicX < (tailleCase*9+(this.getWidth()-this.tailleCase*9)/2) &&		//Si on clique dans la grille
 			this.clicY > (this.getHeight()-this.tailleCase*9)/2 && this.clicY < (tailleCase*9+(this.getHeight()-this.tailleCase*9)/2)){
 			this.clicY = e.getY()-30;
-			this.posX = (clicX-(this.getWidth()-this.tailleCase*9)/2)/tailleCase;				//On récupère la place du clic dans le tableau (x et y)
+			this.posX = (clicX-(this.getWidth()-this.tailleCase*9)/2)/tailleCase;									//On récupère la place du clic dans le tableau (x et y)
 			this.posY = (clicY-(this.getHeight()-this.tailleCase*9)/2)/tailleCase;
 
-			if(this.addEtat == 0){																//On affiche le tableau de valeurs à gauche s'il n'y a rien sur la case dans tabBase
-				this.addEtat++;																	//et s'il n'est pas déjà affiché; Sinon on l'efface
+			if(this.addEtat == 0){																					//On affiche le tableau de valeurs à gauche s'il n'y a rien sur la case dans tabBase
+				this.addEtat++;																						//et s'il n'est pas déjà affiché; Sinon on l'efface
 				repaint();
 			}else if(this.addEtat == 1){
 				this.addEtat--;
@@ -208,7 +208,7 @@ public class Creer extends JComponent implements MouseListener{
 			this.posAddX = (clicX-((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2)/tailleCase;			//On récupère la place du clic dans le tableau (x et y)
 			this.posAddY = ((clicY-((this.getHeight()-this.tailleCase*9)/2-this.tailleCase*3)/2)/tailleCase)-5;
 			this.valAdd = tableau.getValeur(6,posAddY,posAddX);
-			System.out.println("posX = " + this.posX + "; posY = " + this.posY + "; posAddX = " + this.posAddX + "; posAddY = " + this.posAddY + "; valAdd = " + this.valAdd);
+			//System.out.println("posX = " + this.posX + "; posY = " + this.posY + "; posAddX = " + this.posAddX + "; posAddY = " + this.posAddY + "; valAdd = " + this.valAdd);
 
 			if(this.valAdd == 10){						//Si on clique sur le "X" alors on remplace les valeurs à cette place par 0
 				for (int z = 0; z <= 5 ; z++) {				
@@ -227,7 +227,7 @@ public class Creer extends JComponent implements MouseListener{
 				}
 				if(this.erreur == 0){
 					this.tableau.setValue(0, posY, posX, valAdd);
-					System.out.println("0 err");
+					//System.out.println("0 err");
 				}else{}
 				this.addEtat--;									//On efface le tableau de valeurs à gauche
 				repaint();
@@ -242,13 +242,13 @@ public class Creer extends JComponent implements MouseListener{
 					for(j = 0; j < 9; j++){
 						if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) == 0){
 							this.valAdd = 0;
-							System.out.println("0");
+							//System.out.println("0");
 						}else if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) != 0){
 							this.valAdd = this.tableau.getValeur(5, i, j);
-							System.out.println(this.tableau.getValeur(5,i,j));
+							//System.out.println(this.tableau.getValeur(5,i,j));
 						}else if(this.tableau.getValeur(0, i, j) != 0 && this.tableau.getValeur(5, i, j) == 0){
 							this.valAdd = this.tableau.getValeur(0, i, j);
-							System.out.println(this.tableau.getValeur(0,i,j));
+							//System.out.println(this.tableau.getValeur(0,i,j));
 						}
 						this.tableau.setValueGrille(i,j,valAdd);
 					}
@@ -260,7 +260,7 @@ public class Creer extends JComponent implements MouseListener{
 		/*--------------------------------------------Clics Import--------------------------------------------*/
 		if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&					//Si on clique sur le bouton "Importer"
 			this.clicY > 3*((this.getHeight()-this.tailleCase*3)/8)+30 && this.clicY < 3*((this.getHeight()-this.tailleCase*3)/8)+this.tailleCase+30){
-			System.out.println("Import");
+			//System.out.println("Import");
 			this.tableau.importer();
 			repaint();
 		}

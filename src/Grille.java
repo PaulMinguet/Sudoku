@@ -47,17 +47,17 @@ public class Grille extends JComponent implements MouseListener{
 			for(j = 0; j < 9; j++){
 				if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) == 0){
 					this.valAdd = 0;
-					System.out.print("0");
+					//System.out.print("0");
 				}else if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) != 0){
 					this.valAdd = this.tableau.getValeur(5, i, j);
-					System.out.print(this.tableau.getValeur(5,i,j));
+					//System.out.print(this.tableau.getValeur(5,i,j));
 				}else if(this.tableau.getValeur(0, i, j) != 0 && this.tableau.getValeur(5, i, j) == 0){
 					this.valAdd = this.tableau.getValeur(0, i, j);
-					System.out.print(this.tableau.getValeur(0,i,j));
+					//System.out.print(this.tableau.getValeur(0,i,j));
 				}
 				this.tableau.setValueGrille(j,i,valAdd);
 			}
-			System.out.println("");
+			//System.out.println("");
 		}
 		this.solv = new Solveur(tableau.grille);
 	}
@@ -203,7 +203,7 @@ public class Grille extends JComponent implements MouseListener{
 	    }
 	    /*------Vérification------*/
 		if(this.tableau.verifFin()){
-	    	System.out.println("Bravo !");
+	    	//System.out.println("Bravo !");
 	    	this.x = (this.getWidth()/2-3*this.tailleCase);						//Positionner le bouton Sauvegarde
 		    this.y = (this.getHeight()/2-this.tailleCase);
 
