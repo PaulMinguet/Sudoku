@@ -32,8 +32,8 @@ public class Creer extends JComponent implements MouseListener{
 	private int incertitude = 0;
 	private int incertnum = 1;
 	private int erreur = 0;
-	Tableau tableau;
-	Solveur solv;
+	private Tableau tableau;
+	private Solveur solv;
 
 	/**
 	 *
