@@ -6,19 +6,6 @@ public class Solveur {
     private static int TAILLE = 9;
     private long t0;
     private long t1 ;
-    /*
-    private static int[][] tabBase =   
-                    {
-                        {0,0,0,0,9,5,0,0,4},              //Tableau initial
-                        {5,3,0,4,0,8,7,0,2},
-                        {0,0,0,7,0,0,6,0,3},
-                        {9,0,0,0,3,4,0,8,0},
-                        {0,4,0,0,1,0,0,7,0},
-                        {0,2,0,5,7,0,0,0,6},
-                        {4,0,9,0,0,2,0,0,0},
-                        {6,0,7,9,0,3,0,2,1},
-                        {2,0,0,6,5,0,0,0,0}
-                    };*/
 
     /**
      *
@@ -186,33 +173,5 @@ public class Solveur {
         return Long.toString(this.t1 - this.t0);
     }
 
-/*
-public static void main(String[] args) {
-    int[][] tabres = new int[TAILLE][TAILLE];
-    long temps;
-
-    Solveur sudoku = new Solveur(tabBase);
-    
-    if (sudoku.resolution()) {
-            tabres = sudoku.getGrilleResolue();
-
-    for (int i = 0; i < TAILLE; i++) {
-            for (int j = 0; j < TAILLE; j++) {
-                System.out.print(tabres[i][j]);
-
-            }
-            System.out.println("");
-
-        }
-        System.out.println("le sudoku a été résolu en " + sudoku.getTimer() + " NanoSecondes");
-        
-    }else{
-        System.out.println("il n'y a pas de solutions");
-    }
-
-
-
-}
-*/
 
 }

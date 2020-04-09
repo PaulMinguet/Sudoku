@@ -20,18 +20,6 @@ public class Grilleauto extends JComponent{
 		private int j = 0;
 		private int tailleCase;
 		private String temps;
-		private static int[][] tabg =   
-		{
-                        {0,0,0,0,9,5,0,0,4},              //Tableau initial
-                        {5,3,0,4,0,8,7,0,2},
-                        {0,0,0,7,0,0,6,0,3},
-                        {9,0,0,0,3,4,0,8,0},
-                        {0,4,0,0,1,0,0,7,0},
-                        {0,2,0,5,7,0,0,0,6},
-                        {4,0,9,0,0,2,0,0,0},
-                        {6,0,7,9,0,3,0,2,1},
-                        {2,0,0,6,5,0,0,0,0}
-                    };
 
 
                     public Grilleauto(int[][] tableau,String timer){
