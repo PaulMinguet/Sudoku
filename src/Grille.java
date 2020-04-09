@@ -41,30 +41,8 @@ public class Grille extends JComponent implements MouseListener{
 	 */
 	public Grille(Tableau tabBase){
 		this.tableau = tabBase;
-		JFileChooser dialogue = new JFileChooser(new File("."));
-		File fichier;
-		if(dialogue.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-			fichier = dialogue.getSelectedFile();
-			FileInputStream fis = null;
-			try{
-				fis = new FileInputStream(fichier);										//On écrit les valeurs du fichier dans les tableaux et dans la grille.
-				int b;
-					for(i = 0; i < 9; i++){
-						for(j = 0; j < 9; j++){
-							b = fis.read()-48;	
-							this.tableau.setValue(0,i,j,b);
-							if((i*9+(j+1))%9 == 0){
-								fis.read();
-							}
-						}
-					}
-					fis.read();
-				fis.close();
-			}catch(IOException ioe){
-				ioe.printStackTrace();
-			}
-			repaint();
-		}
+		this.tableau.importer();
+		repaint();
 		for(i = 0; i < 9; i++){
 			for(j = 0; j < 9; j++){
 				if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) == 0){
@@ -153,9 +131,9 @@ public class Grille extends JComponent implements MouseListener{
 		    	secondPinceau.setColor(Color.gray);													//On affiche les indices et exposants des hésitations
 	    		secondPinceau.setFont(new Font("default", Font.PLAIN, tailleCase/4));
 	    		for(k = 1; k <= 4; k++){
-	    		if(this.tableau.getValeur(k,j,i) != 0)
-	    		secondPinceau.drawString(this.tableau.getValeurString(k,j,i), this.x+i*tailleCase+(k==1||k==3?1:8)*(this.tailleCase/10), 
-	    			this.y+j*tailleCase+(k==3||k==4?9:1)*this.tailleCase/(k==3||k==4?10:4));		//Afficher les indices/exposants (hésitation du joueur).
+		    		if(this.tableau.getValeur(k,j,i) != 0)
+		    		secondPinceau.drawString(this.tableau.getValeurString(k,j,i), this.x+i*tailleCase+(k==1||k==3?1:8)*(this.tailleCase/10), 
+		    			this.y+j*tailleCase+(k==3||k==4?9:1)*this.tailleCase/(k==3||k==4?10:4));		//Afficher les indices/exposants (hésitation du joueur).
 	    		}																					//Calcul : si tableau 1 (haut gauche) ou 3 (bas gauche) alors pas de décalage de la gauche
 		    }																						//Sinon décalage de 8/10 d'une case; si tableau 3 ou 4 (bas droite) alors décalage de 9/x d'une case vers le bas
 	    }																							//Sinon pas de décalage; si tableau 3 ou 4 alors décalage de 9/10 d'une case vers le bas sinon 4/10

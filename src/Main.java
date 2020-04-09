@@ -85,7 +85,7 @@ public class Main{
 		fenetre.setVisible(true);
 	}
 		public static void resolutionAuto(){
-		Solveur resolv = new Solveur(...);
+		Solveur resolv = new Solveur();
 		resolv.resolution();
 		Grilleauto auto = new Grilleauto(resolv.getGrilleResolue(),resolv.getTimerToString());
 		JFrame fenetre = new JFrame("Sudoku");
