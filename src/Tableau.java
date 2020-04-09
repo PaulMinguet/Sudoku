@@ -93,8 +93,8 @@ public class Tableau{
 	 * @param tabRec = tableau que l'on veut retourner
 	 * @return retourne le tableau entré dans tabRec
 	 */
-	public int[][] getTab(int[][] tabRec){					//Méthode pour récupérer un tableau			
-		return tabRec;
+	public int[][] getTab(){					//Méthode pour récupérer un tableau			
+		return grille;
 	}
 
 	/**

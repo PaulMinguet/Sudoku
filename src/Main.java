@@ -43,7 +43,7 @@ public class Main{
 					break;
 
 					case AUTOMATIQUE:
-					//Main.resolutionAuto();
+					Main.resolutionAuto();
 					break;
 
 					default:
@@ -84,8 +84,10 @@ public class Main{
 		fenetre.add(grille, BorderLayout.CENTER);
 		fenetre.setVisible(true);
 	}
-		/*public static void resolutionAuto(){
-		Solveur resolv = new Solveur();
+		public static void resolutionAuto(){
+		Tableau tab = new Tableau();
+		tab.importer();
+		Solveur resolv = new Solveur(tab.getTab());
 		resolv.resolution();
 		Grilleauto auto = new Grilleauto(resolv.getGrilleResolue(),resolv.getTimerToString());
 		JFrame fenetre = new JFrame("Sudoku");
@@ -94,5 +96,5 @@ public class Main{
 		fenetre.setResizable(false);
 		fenetre.add(auto, BorderLayout.CENTER);
 		fenetre.setVisible(true);
-	}*/
+	}
 }

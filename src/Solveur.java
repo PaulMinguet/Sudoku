@@ -6,6 +6,7 @@ public class Solveur {
     private static int TAILLE = 9;
     private long t0;
     private long t1 ;
+    /*
     private static int[][] tabBase =   
                     {
                         {0,0,0,0,9,5,0,0,4},              //Tableau initial
@@ -17,7 +18,7 @@ public class Solveur {
                         {4,0,9,0,0,2,0,0,0},
                         {6,0,7,9,0,3,0,2,1},
                         {2,0,0,6,5,0,0,0,0}
-                    };
+                    };*/
 
     /**
      *
