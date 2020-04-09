@@ -43,7 +43,7 @@ public class Main{
 					break;
 
 					case AUTOMATIQUE:
-					System.out.println("bite3");
+					Main.resolutionAuto();
 					break;
 
 					default:
@@ -82,6 +82,17 @@ public class Main{
 	    fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    fenetre.setResizable(false);
 		fenetre.add(grille, BorderLayout.CENTER);
+		fenetre.setVisible(true);
+	}
+		public static void resolutionAuto(){
+		Solveur resolv = new Solveur(...);
+		resolv.resolution();
+		Grilleauto auto = new Grilleauto(resolv.getGrilleResolue(),resolv.getTimerToString());
+		JFrame fenetre = new JFrame("Sudoku");
+		fenetre.setSize(1000, 500);
+		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		fenetre.setResizable(false);
+		fenetre.add(auto, BorderLayout.CENTER);
 		fenetre.setVisible(true);
 	}
 }

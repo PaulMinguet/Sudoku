@@ -179,6 +179,11 @@ public class Solveur {
         return this.t1 - this.t0;
     }
 
+     public String getTimerToString(){
+
+        return Long.toString(this.t1 - this.t0);
+    }
+
 /*
 public static void main(String[] args) {
     int[][] tabres = new int[TAILLE][TAILLE];
