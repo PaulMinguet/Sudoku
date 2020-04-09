@@ -73,12 +73,12 @@ public class Tableau{
 			 			{0,0,0,0,0,0,0,0,0},
 						{0,0,0,0,0,0,0,0,0}},
 
-						{{1,2,3},
+						{{1,2,3},							//Tableau des valeurs (à gauche)
 						{4,5,6},
 						{7,8,9},
 						{0,10,0}}};
 
-	int[][] grille = 	{{0,0,0,0,0,0,0,0,0},
+	int[][] grille = 	{{0,0,0,0,0,0,0,0,0},				//tableau à deux dimensions avec toutes les valeurs de la grille (tableau initial + utilisateur)
 						{0,0,0,0,0,0,0,0,0},
 						{0,0,0,0,0,0,0,0,0},
 						{0,0,0,0,0,0,0,0,0},
@@ -90,8 +90,8 @@ public class Tableau{
 
 	/**
 	 *
-	 * @param tabRec
-	 * @return
+	 * @param tabRec = tableau que l'on veut retourner
+	 * @return retourne le tableau entré dans tabRec
 	 */
 	public int[][] getTab(int[][] tabRec){					//Méthode pour récupérer un tableau			
 		return tabRec;
@@ -99,10 +99,10 @@ public class Tableau{
 
 	/**
 	 *
-	 * @param type
-	 * @param x
-	 * @param y
-	 * @param value
+	 * @param type : tableau que l'on veut modifier (initial, indices, exposants, ...)
+	 * @param x	: ligne
+	 * @param y : colonne
+	 * @param value : valeur à mettre
 	 */
 	public void setValue(int type, int x, int y, int value){	//Méthode pour définir une valeur dans le tableau "type"
 		tabBase[type][x][y]=value;
@@ -110,43 +110,51 @@ public class Tableau{
 
 	/**
 	 *
-	 * @param x
-	 * @param y
-	 * @param value
+	 * @param x : ligne
+	 * @param y : colonne
+	 * @param value : valeur à mettre
 	 */
 
 	public void setValueGrille(int x, int y, int value){	//Méthode pour définir une valeur dans le tableau "type"
 		grille[x][y]=value;
 	}
 
+	/**
+	 *
+	 * @param x : ligne
+	 * @param y : colonne
+	 */
 	public int getValeurGrille(int x, int y){
 		return grille[x][y];
 	}
 
+	/**
+	 *
+	 * @param x : ligne
+	 * @param y : colonne
+	 */
 	public String getValeurGrilleString(int x, int y){
 		return Integer.toString(grille[x][y]);
 	}
 
 	/**
 	 *
-	 * @param type
-	 * @param x
-	 * @param y
-	 * @return
+	 * @param type : tableau que l'on veut modifier (initial, indices, exposants, ...)
+	 * @param x	: ligne
+	 * @param y : colonne
+	 * @return retourne la valeur que l'on veut sur la ligne x et la colonne y
 	 */
-
 	public int getValeur(int type, int x, int y){				//Méthode pour récupérer la valeur d'un tableau
 		return tabBase[type][x][y];
 	}
 
 	/**
-	 * 
-	 * @param type
-	 * @param x
-	 * @param y
-	 * @return
+	 *
+	 * @param type : tableau que l'on veut modifier (initial, indices, exposants, ...)
+	 * @param x	: ligne
+	 * @param y : colonne
+	 * @return retourne la valeur que l'on veut sur la ligne x et la colonne y
 	 */
-
 	public String getValeurString(int type, int x, int y){		//Méthode pour récupérer la valeur en String d'un tableau
 		return Integer.toString(tabBase[type][x][y]);
 	}

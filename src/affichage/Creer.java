@@ -59,7 +59,7 @@ public class Creer extends JComponent implements MouseListener{
 
 	/**
 	 *
-	 * @param pinceau
+	 * @param pinceau pinceau pour le graphique
 	 */
   	@Override
   	protected void paintComponent(Graphics pinceau) {
@@ -202,7 +202,7 @@ public class Creer extends JComponent implements MouseListener{
 
 		if(this.addEtat == 1 && this.clicX > ((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2 &&
 		this.clicX < ((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2+3*this.tailleCase && this.clicY > (this.getHeight()-this.tailleCase*3)/2-30 && this.clicY < (this.getHeight()-this.tailleCase*3)/2-30+4*this.tailleCase){
-			this.clicY = e.getY()-4;							//Si on clique dans le tableau de valeurs
+			this.clicY = e.getY()-4;																				//Si on clique dans le tableau de valeurs
 			this.clicY += 30;
 
 			this.posAddX = (clicX-((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2)/tailleCase;			//On récupère la place du clic dans le tableau (x et y)
@@ -217,7 +217,7 @@ public class Creer extends JComponent implements MouseListener{
 				}
 				repaint();
 				this.addEtat--;
-			}else{										//Sinon on place la valeur choisie dans le tableau utilisateur et on l'affiche sur la grille
+			}else{										//Sinon on place la valeur choisie dans le tableau utilisateur si ce n'est pas contraire aux contraintes du Sudoku et on l'affiche sur la grille
 
 				if(verif(posX, posY, valAdd, this.solv)){
 					this.erreur = 0;
@@ -229,7 +229,7 @@ public class Creer extends JComponent implements MouseListener{
 					this.tableau.setValue(0, posY, posX, valAdd);
 					//System.out.println("0 err");
 				}else{}
-				this.addEtat--;									//On efface le tableau de valeurs à gauche
+				this.addEtat--;							//On efface le tableau de valeurs à gauche
 				repaint();
 			}
 		}
@@ -238,31 +238,31 @@ public class Creer extends JComponent implements MouseListener{
 		if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&				//Si on clique sur le bouton "Sauvergarder"
 			this.clicY > (this.getHeight()-this.tailleCase*3)/8+30 && this.clicY < (this.getHeight()-this.tailleCase*3)/8+this.tailleCase+30){
 			//System.out.println("Save");
-			for(i = 0; i < 9; i++){					//Remplir le tableau grille
+			for(i = 0; i < 9; i++){					//Remplir le tableau grille avec les valeurs de tabBase(0)
 					for(j = 0; j < 9; j++){
-						if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) == 0){
+						if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) == 0){			//S'il n'y a de valeur dans aucun tableau à la case i,j, alors on met 0 dans la variable valAdd
 							this.valAdd = 0;
 							//System.out.println("0");
-						}else if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) != 0){
-							this.valAdd = this.tableau.getValeur(5, i, j);
+						}else if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) != 0){		//S'il n'y a pas de valeur dans le tableau de base mais une dans le tableau utilisateur,
+							this.valAdd = this.tableau.getValeur(5, i, j);											//Alors on met la valeur du tableau utilisateur dans la variable valAdd
 							//System.out.println(this.tableau.getValeur(5,i,j));
-						}else if(this.tableau.getValeur(0, i, j) != 0 && this.tableau.getValeur(5, i, j) == 0){
-							this.valAdd = this.tableau.getValeur(0, i, j);
+						}else if(this.tableau.getValeur(0, i, j) != 0 && this.tableau.getValeur(5, i, j) == 0){		//S'il y a une valeur dans le tableau de base mais pas dans le tableau utilisateur,
+							this.valAdd = this.tableau.getValeur(0, i, j);											//Alors on met la valeur du tableau de base dans la variable valAdd
 							//System.out.println(this.tableau.getValeur(0,i,j));
 						}
-						this.tableau.setValueGrille(i,j,valAdd);
+						this.tableau.setValueGrille(i,j,valAdd);													//On met la variable valAdd dans la grille
 					}
 				}
 
-			this.tableau.sauvegarder();
+			this.tableau.sauvegarder();				//Sauvegarde dans le fichier choisi (voir Tableau.java)
 		}
 
 		/*--------------------------------------------Clics Import--------------------------------------------*/
 		if(this.clicX > (this.getWidth()-this.tailleCase*4) && this.clicX < (this.getWidth()-this.tailleCase*4)+3*this.tailleCase &&					//Si on clique sur le bouton "Importer"
 			this.clicY > 3*((this.getHeight()-this.tailleCase*3)/8)+30 && this.clicY < 3*((this.getHeight()-this.tailleCase*3)/8)+this.tailleCase+30){
 			//System.out.println("Import");
-			this.tableau.importer();
-			repaint();
+			this.tableau.importer();				//Importation depuis le fichier choisi (voir Tableau.java)
+			repaint();								//"Refresh" de la fenêtre
 		}
 	}
 }

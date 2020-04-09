@@ -37,13 +37,13 @@ public class Grille extends JComponent implements MouseListener{
 
 	/**
 	 *
-	 * @param tabBase
+	 * @param tabBase représente le tableau que prend en argument le constructeur de Creer pour les interactions entre Creer et Tableau (via this.tableau)
 	 */
 	public Grille(Tableau tabBase){
 		this.tableau = tabBase;
 		this.tableau.importer();
 		repaint();
-		for(i = 0; i < 9; i++){
+		for(i = 0; i < 9; i++){						//on charge les valeurs des tableaux dans la grille
 			for(j = 0; j < 9; j++){
 				if(this.tableau.getValeur(0, i, j) == 0 && this.tableau.getValeur(5, i, j) == 0){
 					this.valAdd = 0;
@@ -62,13 +62,13 @@ public class Grille extends JComponent implements MouseListener{
 		this.solv = new Solveur(tableau.grille);
 	}
 
-	public boolean verif(int ligne, int colonne, int valeur, Solveur solvi){
-		boolean x = solvi.verifValDansLigne(ligne, valeur);
-        boolean z = solvi.verifValDansColonne(colonne, valeur);
-		boolean y = solvi.verifValDansCarre(ligne, colonne, valeur);
+	public boolean verif(int ligne, int colonne, int valeur, Solveur solvi){		//méthode pour vérifier si l'utilisateur a le droit de mettre une valeur à un certain endroit
+		boolean x = solvi.verifValDansLigne(ligne, valeur);							//Vérifie s'il n'y a pas déjà la même valeur sur la même ligne
+        boolean z = solvi.verifValDansColonne(colonne, valeur);						//Vérifie s'il n'y a pas déjà la même valeur sur la même colonne
+		boolean y = solvi.verifValDansCarre(ligne, colonne, valeur);				//Vérifie s'il n'y a pas déjà la même valeur dans le même bloc
         if (!x && !y && !z)
         {
-        	return true;
+        	return true;															//Renvoie vrai si l'utilisateur peut poser sa valeur, faux sinon
         }else{
         	return false;
         }
@@ -76,7 +76,7 @@ public class Grille extends JComponent implements MouseListener{
 
 	/**
 	 *
-	 * @param pinceau
+	 * @param pinceau pinceau pour le graphique
 	 */
   	@Override
   	protected void paintComponent(Graphics pinceau) {
@@ -134,13 +134,13 @@ public class Grille extends JComponent implements MouseListener{
 		    		if(this.tableau.getValeur(k,j,i) != 0)
 		    		secondPinceau.drawString(this.tableau.getValeurString(k,j,i), this.x+i*tailleCase+(k==1||k==3?1:8)*(this.tailleCase/10), 
 		    			this.y+j*tailleCase+(k==3||k==4?9:1)*this.tailleCase/(k==3||k==4?10:4));		//Afficher les indices/exposants (hésitation du joueur).
-	    		}																					//Calcul : si tableau 1 (haut gauche) ou 3 (bas gauche) alors pas de décalage de la gauche
-		    }																						//Sinon décalage de 8/10 d'une case; si tableau 3 ou 4 (bas droite) alors décalage de 9/x d'une case vers le bas
-	    }																							//Sinon pas de décalage; si tableau 3 ou 4 alors décalage de 9/10 d'une case vers le bas sinon 4/10
+	    		}																						//Calcul : si tableau 1 (haut gauche) ou 3 (bas gauche) alors pas de décalage de la gauche
+		    }																							//Sinon décalage de 8/10 d'une case; si tableau 3 ou 4 (bas droite) alors décalage de 9/x d'une case vers le bas
+	    }																								//Sinon pas de décalage; si tableau 3 ou 4 alors décalage de 9/10 d'une case vers le bas sinon 4/10
 
 	    /*---------------------------------------------Bouton incertitude---------------------------------------------*/
 
-	    this.x = ((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2;						//Positionner le bouton incertitude
+	    this.x = ((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2;							//Positionner le bouton incertitude
 	    this.y = (this.getHeight()-this.tailleCase*3)/8;
 
 	    if(this.incertitude == 0){							//Si le bouton incertitude n'est pas cliqué, alors il est de couleur bleue
@@ -148,7 +148,7 @@ public class Grille extends JComponent implements MouseListener{
 		}else{												//Sinon il est vert
 			secondPinceau.setColor(Color.green);
 		}
-	    secondPinceau.setFont(new Font("default", Font.BOLD, tailleCase/4));						//Afficher le bouton "incertitude"
+	    secondPinceau.setFont(new Font("default", Font.BOLD, tailleCase/4));							//Afficher le bouton "incertitude"
 		secondPinceau.fillRoundRect(this.x, this.y, this.tailleCase*3, this.tailleCase, this.tailleCase, this.tailleCase);
 		secondPinceau.setColor(Color.black);
     	secondPinceau.drawRoundRect(this.x, this.y, this.tailleCase*3, this.tailleCase, this.tailleCase, this.tailleCase);
@@ -204,10 +204,10 @@ public class Grille extends JComponent implements MouseListener{
 	    /*------Vérification------*/
 		if(this.tableau.verifFin()){
 	    	//System.out.println("Bravo !");
-	    	this.x = (this.getWidth()/2-3*this.tailleCase);						//Positionner le bouton Sauvegarde
+	    	this.x = (this.getWidth()/2-3*this.tailleCase);											//Positionner le bouton Sauvegarde
 		    this.y = (this.getHeight()/2-this.tailleCase);
 
-		    secondPinceau.setColor(Color.red);					//Afficher le bouton "Sauvegarder"
+		    secondPinceau.setColor(Color.red);														//Afficher le bouton "Sauvegarder"
 		    secondPinceau.setFont(new Font("default", Font.BOLD, tailleCase/2));
 			secondPinceau.fillRoundRect(this.x, this.y, this.tailleCase*6, this.tailleCase*2, this.tailleCase, this.tailleCase);
 			secondPinceau.setColor(Color.black);
@@ -234,11 +234,11 @@ public class Grille extends JComponent implements MouseListener{
 
 		if(this.clicX > (this.getWidth()-this.tailleCase*9)/2 && this.clicX < (tailleCase*9+(this.getWidth()-this.tailleCase*9)/2) &&		//Si on clique dans la grille
 			this.clicY > (this.getHeight()-this.tailleCase*9)/2 && this.clicY < (tailleCase*9+(this.getHeight()-this.tailleCase*9)/2)){
-			this.posX = (clicX-(this.getWidth()-this.tailleCase*9)/2)/tailleCase;				//On récupère la place du clic dans le tableau (x et y)
+			this.posX = (clicX-(this.getWidth()-this.tailleCase*9)/2)/tailleCase;													//On récupère la place du clic dans le tableau (x et y)
 			this.posY = (clicY-(this.getHeight()-this.tailleCase*9)/2)/tailleCase;
 
-			if(this.addEtat == 0 && this.tableau.getValeur(0,posY,posX) == 0){					//On affiche le tableau de valeurs à gauche s'il n'y a rien sur la case dans tabBase
-				this.addEtat++;																	//et s'il n'est pas déjà affiché; Sinon on l'efface
+			if(this.addEtat == 0 && this.tableau.getValeur(0,posY,posX) == 0){														//On affiche le tableau de valeurs à gauche s'il n'y a rien sur la case dans tabBase
+				this.addEtat++;																										//et s'il n'est pas déjà affiché; Sinon on l'efface
 				repaint();
 			}else if(this.addEtat == 1){
 				this.addEtat--;
@@ -250,7 +250,7 @@ public class Grille extends JComponent implements MouseListener{
 			if(this.clicX > ((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2 && this.clicX < (((this.getWidth()-this.tailleCase*9)/2-this.tailleCase*3)/2)+3*this.tailleCase &&
 				this.clicY > (this.getHeight()-this.tailleCase*3)/8 && this.clicY < (this.getHeight()-this.tailleCase*3)/8+this.tailleCase+2*this.tailleCase/3){	//Si on clique sur le bouton
 				if(this.incertitude == 1) {																															//Incertitude
-					this.incertitude = 0;													//Alors incertitude = 0 s'il est déjà activé, sinon 1
+					this.incertitude = 0;																															//Alors incertitude = 0 s'il est déjà activé, sinon 1
 					repaint();
 				}else{
 					this.incertitude = 1;
@@ -293,7 +293,7 @@ public class Grille extends JComponent implements MouseListener{
 								this.incertnum = 1;
 							}
 						}
-					}else{										//Sinon on place la valeur choisie dans le tableau utilisateur et on l'affiche sur la grille
+					}else{										//Sinon on place la valeur choisie dans le tableau utilisateur si ce n'est pas contraire aux contraintes du Sudoku et on l'affiche sur la grille
 						if(verif(posX, posY, valAdd, this.solv)){
 							this.erreur = 0;
 							solv.setGrille(posX, posY, valAdd);
